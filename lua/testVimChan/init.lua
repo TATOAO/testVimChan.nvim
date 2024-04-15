@@ -16,13 +16,16 @@ local function start_job()
         on_stdout = on_stdout,
         on_exit = on_exit,
         stdout_buffered = true,
+		stdin = true and "pipe"
     }
 
-	-- local cmd = {
-	-- 	"sql-fomratter"
-	-- }
+	local command = {
+		"/Users/tatoaoliang/.local/share/nvim/mason/bin/sql-formatter",
+		"--config",
+		"/Users/tatoaoliang/.config/nvim/lua/plugin-config/sql_formatter_config.json"
+	}
     -- The command to run
-    local command = "cat"
+    -- local command = "cat"
 
     -- Start the job
     local status, job_id_or_err = pcall(vim.fn.jobstart, command, opts)
@@ -34,12 +37,12 @@ local function start_job()
     end
 
 	local jid = job_id_or_err
-	vim.api.nvim_chan_send(jid, "hello shit")
+	vim.api.nvim_chan_send(jid, "select shit from sdfsd.table")
 	print(jid)
 	print('eeeeee')
     vim.fn.chanclose(jid, "stdin")
 
-	vim.fn.jobstop(jid)
+	-- vim.fn.jobstop(jid)
 
 
 end
